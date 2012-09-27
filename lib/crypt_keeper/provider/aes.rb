@@ -36,6 +36,8 @@ module CryptKeeper
         iv      = rand.to_s
         aes.iv  = iv
         Base64::encode64("#{iv}#{SEPARATOR}#{aes.update(value.to_s) + aes.final}")
+      rescue OpenSSL::Cipher::CipherError => e
+        puts "value: #{value}, error: #{e}"
       end
 
       # Public: Decrypt a string
